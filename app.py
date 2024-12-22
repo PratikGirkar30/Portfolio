@@ -12,8 +12,8 @@ class messages(db.Model):
     message = db.Column(db.String(255), unique=False)
 
 
-@app.route('/' , methods=['GET', 'POST'])
-def Hello_World():
+@app.route('/submit' , methods=['GET', 'POST'])
+def Submit():
     if(request.method=='POST'):
         name=request.form['name']
         email=request.form['email']
@@ -21,13 +21,14 @@ def Hello_World():
         new_con = messages(name=name,email=email,message=message)
         db.session.add(new_con)
         db.session.commit()
-        return render_template('index.html')
+        return redirect(url_for('Hello_World'))
     return render_template('index.html')  
 
 
-#@app.route('/')
-#def Hello_World():
-#    return render_template('index.html')
+@app.route('/')
+def Hello_World():
+    return render_template('index.html')
+
 
 @app.route('/index')
 def index():
